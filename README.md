@@ -14,3 +14,5 @@ The first release only works on Windows 10.
 - Provide suggestions for popular Spotify playlists and famous album covers
 - Programatically update the wallpaper
 - Cron job to check for updates to playlist and update wallpapers
+
+![Screenshot](https://i.imgur.com/S5j3tlq.jpg)
