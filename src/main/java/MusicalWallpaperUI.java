@@ -87,9 +87,9 @@ public class MusicalWallpaperUI extends JFrame {
             add(new JLabel("How many album covers per wallpaper?"));
 
             Hashtable labelTable = new Hashtable();
-            labelTable.put(new Integer(0), new JLabel("Few"));
-            labelTable.put(new Integer(1), new JLabel("Some"));
-            labelTable.put(new Integer(2), new JLabel("Many"));
+            labelTable.put(0, new JLabel("Few"));
+            labelTable.put(1, new JLabel("Some"));
+            labelTable.put(2, new JLabel("Many"));
 
             int initialValue = 0; // default in case of error
             try {
@@ -103,15 +103,13 @@ public class MusicalWallpaperUI extends JFrame {
             slider.setPaintLabels(true);
             slider.setPaintTicks(true);
             add(slider);
+            updateImageSizePreferenceFromSlider(slider);
+
             slider.addChangeListener(new ChangeListener() {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     if (!slider.getValueIsAdjusting()) {
-                        try {
-                            PropertiesManager.setProperty("imageSizeCode", String.valueOf(slider.getValue()));
-                        } catch (IOException exception) {
-                            showErrorMessage(exception.getMessage());
-                        }
+                        updateImageSizePreferenceFromSlider(slider);
                     }
                 }
             });
@@ -124,6 +122,14 @@ public class MusicalWallpaperUI extends JFrame {
                     nextPanel();
                 }
             });
+        }
+    }
+
+    private void updateImageSizePreferenceFromSlider(JSlider slider) {
+        try {
+            PropertiesManager.setProperty("imageSizeCode", String.valueOf(slider.getValue()));
+        } catch (IOException exception) {
+            showErrorMessage(exception.getMessage());
         }
     }
 

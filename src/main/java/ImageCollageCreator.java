@@ -29,12 +29,13 @@ public class ImageCollageCreator extends SwingWorker<Void, Void> {
             createAndSaveImages();
         } catch(Exception e) {
             errorCode = "Could not generate album art collages. Error code: " + e.getMessage();
+            e.printStackTrace();
         }
         return null;
     }
 
     private void createAndSaveImages() throws IOException {
-        int imageSizeCode = Integer.parseInt(PropertiesManager.getProperty("imageSizeCode"));
+        int imageSizeCode = Integer.parseInt(PropertiesManager.getProperty("imageSizeCode", "1"));
         int size = AlbumArtGrabber.SPOTIFY_IMAGE_SIZES[imageSizeCode];
         IMAGE_X = size;
         IMAGE_Y = size;

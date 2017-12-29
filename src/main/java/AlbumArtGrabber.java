@@ -24,12 +24,19 @@ public class AlbumArtGrabber extends SwingWorker<Void, Void> { //  extends Swing
     // the error code is to get around SwingWorkers not using exception throwing in doInBackground()
 
 
+    // temp main method for testing
+    public static void main(String[] args) throws Exception {
+        AlbumArtGrabber albumArtGrabber = new AlbumArtGrabber();
+        albumArtGrabber.downloadAlbumArt();
+    }
+
     @Override
     protected Void doInBackground() {
         try {
             downloadAlbumArt();
         } catch(Exception e) {
             errorCode = "Could not download album art. Error: " + e.getMessage();
+            e.printStackTrace();
         }
         return null;
     }
@@ -76,7 +83,7 @@ public class AlbumArtGrabber extends SwingWorker<Void, Void> { //  extends Swing
             for (PlaylistTrack track : tracks) {
                 SimpleAlbum album = track.getTrack().getAlbum();
                 // use IMAGE_NUMBER to select the desired resolution
-                int imageNum = Integer.parseInt(PropertiesManager.getProperty("imageSizeCode"));
+                int imageNum = Integer.parseInt(PropertiesManager.getProperty("imageSizeCode", "1"));
                 String url = album.getImages().get(imageNum).getUrl();
                 albumNamesAndImages.put(album.getName(), url);
             }
